@@ -102,6 +102,11 @@ void SkraperAssetsProvider::findStaticData(HashMap<QString, modeldata::Game>& ga
     const std::vector<QString> game_dirs = get_game_dirs();
     const HashMap<QString, modeldata::Game* const> extless_path_to_game = build_gamepath_db(games);
 
+    qDebug() << "Skraper: game directories:";
+    for (const QString& dir : game_dirs)
+        qDebug() << "Skraper: - " << dir;
+
+
     constexpr auto dir_filters = QDir::Files | QDir::Readable | QDir::NoDotAndDotDot;
     constexpr auto dir_flags = QDirIterator::Subdirectories | QDirIterator::FollowSymlinks;
 
@@ -109,12 +114,19 @@ void SkraperAssetsProvider::findStaticData(HashMap<QString, modeldata::Game>& ga
     for (const QString& game_dir : game_dirs) {
         for (const QString& media_dir : m_media_dirs) {
             const QString game_media_dir = game_dir % media_dir;
-            if (!QFileInfo::exists(game_media_dir))
+
+            if (!QFileInfo::exists(game_media_dir)) {
+                qDebug() << "Skraper:" << game_media_dir << "does not exists, skipped";
                 continue;
+            }
+
+            qDebug() << "Skraper:" << game_media_dir << "found";
 
             for (const SkraperDir& asset_dir : m_asset_dirs) {
                 const QString search_dir = game_media_dir % asset_dir.dir_name;
                 const int subpath_len = media_dir.length() + asset_dir.dir_name.length();
+
+                qDebug() << "Skraper: see if there are assets under" << search_dir;
 
                 QDirIterator dir_it(search_dir, dir_filters, dir_flags);
                 while (dir_it.hasNext()) {
@@ -123,12 +135,19 @@ void SkraperAssetsProvider::findStaticData(HashMap<QString, modeldata::Game>& ga
 
                     const QString game_path = finfo.canonicalPath().remove(game_dir.length(), subpath_len)
                                             % '/' % finfo.completeBaseName();
-                    if (!extless_path_to_game.count(game_path))
+
+                    qDebug() << "Skraper: asset file found:" << finfo.canonicalFilePath();
+                    qDebug() << "Skraper: expected game (wo. ext):" << game_path;
+
+                    if (!extless_path_to_game.count(game_path)) {
+                        qDebug() << "Skraper: game" << game_path << "not registered";
                         continue;
+                    }
 
                     modeldata::Game* const game = extless_path_to_game.at(game_path);
                     game->assets.addFileMaybe(asset_dir.asset_type, dir_it.filePath());
                     found_assets_cnt++;
+                    qDebug() << "Skraper: game" << game_path << "found, asset set, OK!";
                 }
             }
         }
