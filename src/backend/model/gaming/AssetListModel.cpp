@@ -15,12 +15,12 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-#include "GameAssets.h"
+#include "AssetListModel.h"
 
 
 namespace model {
 
-GameAssets::GameAssets(modeldata::GameAssets* const assets, QObject* parent)
+AssetListModel::AssetListModel(modeldata::GameAssets* const assets, QObject* parent)
     : QObject(parent)
     , m_assets(std::move(assets))
 {}

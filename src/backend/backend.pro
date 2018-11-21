@@ -1,7 +1,7 @@
 TEMPLATE = lib
 
 QT += qml quick gamepad sql
-CONFIG += c++11 staticlib warn_on exceptions_off object_parallel_to_source
+CONFIG += c++11 staticlib warn_on exceptions_off
 android: QT += androidextras
 
 
@@ -17,7 +17,9 @@ SOURCES += \
     ScriptRunner.cpp \
     Paths.cpp \
     AppSettings.cpp \
-    Log.cpp
+    Log.cpp \
+    PrivateApi.cpp \
+    DataSet.cpp
 
 HEADERS += \
     Api.h \
@@ -33,6 +35,8 @@ HEADERS += \
     Paths.h \
     AppSettings.h \
     Log.h \
+    PrivateApi.h \
+    DataSet.h
 
 include(configfiles/configfiles.pri)
 include(platform/platform.pri)

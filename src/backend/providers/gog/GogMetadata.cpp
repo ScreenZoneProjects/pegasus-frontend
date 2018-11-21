@@ -95,7 +95,7 @@ bool read_embed_json(modeldata::Game& game, const QJsonDocument& json)
         return false;
 
 
-    const QString game_id = game.extra.at(providers::gog::gog_id_key());
+    /*const QString game_id = game.extra.at(providers::gog::gog_id_key());
 
     const auto products = json_root[QLatin1String("products")].toArray();
     for (const auto& products_entry : products) {
@@ -111,17 +111,17 @@ bool read_embed_json(modeldata::Game& game, const QJsonDocument& json)
         const auto genres = product[QLatin1String("genres")].toArray();
         for (const auto& genres_entry : genres)
             game.genres.append(genres_entry.toString());
-    }
+    }*/
 
     return true;
 }
 
 bool fill_from_cache(modeldata::Game& entry)
 {
-    if (!entry.extra.count(providers::gog::gog_id_key()))
+    /*if (!entry.extra.count(providers::gog::gog_id_key()))*/
         return false;
 
-    const QString message_prefix = QLatin1String(MSG_PREFIX);
+    /*const QString message_prefix = QLatin1String(MSG_PREFIX);
     const QString cache_dir = QLatin1String(JSON_CACHE_DIR);
     const QString entry_api = entry.extra.at(providers::gog::gog_id_key()) + providers::gog::json_api_suffix();
     const QString entry_embed = entry.extra.at(providers::gog::gog_id_key()) + providers::gog::json_embed_suffix();
@@ -136,12 +136,12 @@ bool fill_from_cache(modeldata::Game& entry)
     if (!json_embed_success)
         providers::delete_cached_json(message_prefix, cache_dir, entry_embed);
 
-    return json_api_success && json_embed_success;
+    return json_api_success && json_embed_success;*/
 }
 
 void download_metadata(std::vector<modeldata::Game*>& entries, QNetworkAccessManager& netman)
 {
-    const int TIMEOUT_MS(5000);
+    /*const int TIMEOUT_MS(5000);
     const auto API_URL(QStringLiteral("https://api.gog.com/products/%1?expand=description,screenshots,videos"));
     const auto EMBED_URL(QStringLiteral("https://embed.gog.com/games/ajax/filtered?mediaType=game&search=%1"));
 
@@ -264,7 +264,7 @@ void download_metadata(std::vector<modeldata::Game*>& entries, QNetworkAccessMan
 
         listener->deleteLater();
         listener = nullptr;
-    }
+    }*/
 }
 } // namespace
 
@@ -280,7 +280,7 @@ void Metadata::enhance(HashMap<QString, modeldata::Game>& games,
                        const HashMap<QString, modeldata::Collection>&,
                        const HashMap<QString, std::vector<QString>>& collection_childs)
 {
-    const QString GOG_TAG(QStringLiteral("GOG"));
+    /*const QString GOG_TAG(QStringLiteral("GOG"));
     if (!collection_childs.count(GOG_TAG))
         return;
 
@@ -313,7 +313,7 @@ void Metadata::enhance(HashMap<QString, modeldata::Game>& games,
             << tr_log("no internet connection - most game data may be missing");
         return;
     }
-    download_metadata(uncached_entries, netman);
+    download_metadata(uncached_entries, netman);*/
 }
 
 } // namespace gog

@@ -130,7 +130,7 @@ void register_entries(const std::vector<GogEntry>& entries,
                       HashMap<QString, modeldata::Game>& games,
                       std::vector<QString>& collection_childs)
 {
-    for (const GogEntry& entry : entries) {
+    /*for (const GogEntry& entry : entries) {
         QFileInfo finfo(entry.exe);
         const QString game_key = finfo.canonicalFilePath();
 
@@ -147,7 +147,7 @@ void register_entries(const std::vector<GogEntry>& entries,
         }
 
         collection_childs.emplace_back(game_key);
-    }
+    }*/
 }
 } // namespace
 

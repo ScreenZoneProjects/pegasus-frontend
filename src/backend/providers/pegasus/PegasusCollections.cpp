@@ -101,7 +101,7 @@ std::vector<GameFilter> read_collections_file(const HashMap<QString, AttribType>
                 collections.emplace(val, modeldata::Collection(val));
 
             curr_coll = &collections.at(val);
-            curr_coll->source_dirs.append(dir_path);
+            //curr_coll->source_dirs.append(dir_path);
 
             filters.emplace_back(val, dir_path);
             return;
@@ -125,7 +125,7 @@ std::vector<GameFilter> read_collections_file(const HashMap<QString, AttribType>
                 return;
             }
 
-            providers::pegasus::add_asset(curr_coll->default_assets, asset_type, val, dir_path);
+            providers::pegasus::add_asset(curr_coll->assets, asset_type, val, dir_path);
             return;
         }
         if (!key_types.count(key)) {
@@ -143,7 +143,7 @@ std::vector<GameFilter> read_collections_file(const HashMap<QString, AttribType>
                 curr_coll->setShortName(val);
                 break;
             case AttribType::LAUNCH_CMD:
-                curr_coll->setLaunchCmd(val);
+                curr_coll->launch_cmd = val;
                 break;
             case AttribType::DIRECTORIES:
                 {
@@ -151,7 +151,7 @@ std::vector<GameFilter> read_collections_file(const HashMap<QString, AttribType>
                     if (finfo.isRelative())
                         finfo.setFile(dir_path % '/' % val);
 
-                    curr_coll->source_dirs.append(finfo.canonicalFilePath());
+                    //curr_coll->source_dirs.append(finfo.canonicalFilePath());
                     filter.directories.append(finfo.canonicalFilePath());
                 }
                 break;
@@ -213,7 +213,7 @@ void process_filter(const GameFilter& filter,
                     HashMap<QString, modeldata::Collection>& collections,
                     HashMap<QString, std::vector<QString>>& collection_childs)
 {
-    constexpr auto entry_filters = QDir::Files | QDir::Dirs | QDir::Readable | QDir::NoDotAndDotDot;
+    /*constexpr auto entry_filters = QDir::Files | QDir::Dirs | QDir::Readable | QDir::NoDotAndDotDot;
     constexpr auto subdir_filters = QDir::Dirs | QDir::Readable | QDir::NoDotAndDotDot;
     constexpr auto entry_flags = QDirIterator::FollowSymlinks;
     constexpr auto subdir_flags = QDirIterator::FollowSymlinks | QDirIterator::Subdirectories;
@@ -264,7 +264,7 @@ void process_filter(const GameFilter& filter,
                 collection_childs[filter.parent_collection].emplace_back(game_key);
             }
         }
-    }
+    }*/
 }
 
 } // namespace

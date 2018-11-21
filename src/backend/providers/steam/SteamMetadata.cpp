@@ -126,7 +126,7 @@ bool read_json(modeldata::Game& game, const QJsonDocument& json)
 
     modeldata::GameAssets& assets = game.assets;
 
-    game.title = app_data[QLatin1String("name")].toString();
+    //game.title = app_data[QLatin1String("name")].toString();
 
     game.summary = app_data[QLatin1String("short_description")].toString();
     game.description = app_data[QLatin1String("about_the_game")].toString();
@@ -315,7 +315,7 @@ void Metadata::enhance(HashMap<QString, modeldata::Game>& games,
 
     std::vector<SteamGameEntry> entries;
 
-    for (const QString& game_key : childs) {
+    /*for (const QString& game_key : childs) {
         modeldata::Game& game = games.at(game_key);
 
         SteamGameEntry entry = read_manifest(game.fileinfo().filePath());
@@ -329,7 +329,7 @@ void Metadata::enhance(HashMap<QString, modeldata::Game>& games,
 
             entries.push_back(std::move(entry));
         }
-    }
+    }*/
 
     if (entries.empty()) {
         qInfo().noquote() << MSG_PREFIX << tr_log("couldn't find any installed games");

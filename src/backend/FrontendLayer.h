@@ -18,7 +18,6 @@
 #pragma once
 
 #include <QObject>
-#include <QPointer>
 #include <QQmlApplicationEngine>
 
 #ifdef Q_OS_ANDROID
@@ -39,7 +38,7 @@ class FrontendLayer : public QObject {
     Q_OBJECT
 
 public:
-    explicit FrontendLayer(QObject* const api, QObject* parent = nullptr);
+    explicit FrontendLayer(QObject* const api_public, QObject* const api_private);
 
     void rebuild();
     void teardown();
@@ -51,8 +50,9 @@ signals:
     void teardownComplete();
 
 private:
-    QObject* const m_api;
-    QPointer<QQmlApplicationEngine> m_engine;
+    QObject* const m_api_public;
+    QObject* const m_api_private;
+    QQmlApplicationEngine* m_engine;
 
 #ifdef Q_OS_ANDROID
     AndroidAppIconProvider m_android_icon_provider;

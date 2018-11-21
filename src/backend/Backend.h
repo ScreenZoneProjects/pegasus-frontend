@@ -18,8 +18,10 @@
 #pragma once
 
 #include "Api.h"
+#include "PrivateApi.h"
 #include "FrontendLayer.h"
 #include "ProcessLauncher.h"
+#include "utils/NoCopyNoMove.h"
 
 
 namespace backend {
@@ -27,14 +29,14 @@ namespace backend {
 class Backend {
 public:
     Backend();
-    Backend(const Backend&) = delete;
-    Backend& operator=(const Backend&) = delete;
+    NO_COPY_NO_MOVE(Backend)
 
     void start();
 
 private:
     // frontend <-> api <-> launcher
-    ApiObject api;
+    PublicApi api_public;
+    PrivateApi api_private;
     FrontendLayer frontend;
     ProcessLauncher launcher;
 };

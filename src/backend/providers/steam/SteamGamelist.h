@@ -38,6 +38,9 @@ public:
 
 signals:
     void gameCountChanged(int count);
+
+private:
+    QStringList m_installdirs;
 };
 
 } // namespace steam

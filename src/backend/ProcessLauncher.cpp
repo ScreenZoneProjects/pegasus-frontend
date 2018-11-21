@@ -19,14 +19,12 @@
 
 #include "LocaleUtils.h"
 #include "ScriptRunner.h"
-#include "model/gaming/Collection.h"
-#include "model/gaming/Game.h"
 #include "platform/TerminalKbd.h"
 
 #include <QDebug>
 
 
-namespace {
+/*namespace {
 void format_launch_command(QString& launch_cmd, const modeldata::Game& game)
 {
     launch_cmd
@@ -36,7 +34,7 @@ void format_launch_command(QString& launch_cmd, const modeldata::Game& game)
         .replace(QLatin1String("{file.dir}"), game.fileinfo().absolutePath());
 }
 } // namespace
-
+*/
 
 namespace {
 static constexpr auto SEPARATOR = "----------------------------------------";
@@ -48,10 +46,10 @@ ProcessLauncher::ProcessLauncher(QObject* parent)
     , process(nullptr)
 {}
 
-void ProcessLauncher::onLaunchRequested(const model::Collection* collection,
-                                        const model::Game* game)
+void ProcessLauncher::onLaunchRequested(const modeldata::Collection* collection,
+                                        const modeldata::Game* game)
 {
-    Q_ASSERT(game);
+    /*Q_ASSERT(game);
     // collection can be null!
 
     QString launch_cmd = game->data().launch_cmd;
@@ -78,7 +76,7 @@ void ProcessLauncher::onLaunchRequested(const model::Collection* collection,
 
 
     beforeRun();
-    runProcess(launch_cmd, workdir);
+    runProcess(launch_cmd, workdir);*/
 }
 
 void ProcessLauncher::runProcess(const QString& command, const QString& workdir)

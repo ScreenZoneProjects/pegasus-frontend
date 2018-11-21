@@ -19,8 +19,6 @@
 
 #include "LocaleUtils.h"
 #include "Paths.h"
-#include "model/gaming/Collection.h"
-#include "model/gaming/Game.h"
 
 #include <QDebug>
 #include <QFileInfo>
@@ -169,7 +167,7 @@ void save_play_entry(const int path_id, const QDateTime& start_time, const qint6
     if (!query.exec())
         print_query_error(query);
 }
-
+/*
 void update_modelgame(model::Game* const game, const QDateTime& start_time, const qint64 duration)
 {
     Q_ASSERT(game);
@@ -182,7 +180,7 @@ bool collection_is_steam(const model::Collection* const collection)
 {
     return collection->data().name() == QLatin1String("Steam");
 }
-
+*/
 } // namespace
 
 
@@ -197,7 +195,7 @@ PlaytimeStats::PlaytimeStats(QString db_path, QObject* parent)
     : Provider(parent)
     , m_db_path(std::move(db_path))
 {}
-
+/*
 void PlaytimeStats::findDynamicData(const QVector<model::Game*>&,
                                     const QVector<model::Collection*>&,
                                     const HashMap<QString, model::Game*>& modelgame_map)
@@ -338,6 +336,6 @@ void PlaytimeStats::start_processing()
         emit finishedWriting();
     });
 }
-
+*/
 } // namespace playtime
 } // namespace providers

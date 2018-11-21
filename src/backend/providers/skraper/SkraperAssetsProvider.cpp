@@ -44,12 +44,12 @@ HashMap<QString, modeldata::Game* const> build_gamepath_db(HashMap<QString, mode
 {
     HashMap<QString, modeldata::Game* const> map;
 
-    for (auto& pair : games) {
+    /*for (auto& pair : games) {
         const QFileInfo& finfo = pair.second.fileinfo();
 
         QString path = finfo.canonicalPath() % '/' % finfo.completeBaseName();
         map.emplace(std::move(path), &pair.second);
-    }
+    }*/
 
     return map;
 }

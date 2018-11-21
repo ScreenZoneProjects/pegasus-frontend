@@ -20,8 +20,7 @@
 #include "ConfigFile.h"
 #include "LocaleUtils.h"
 #include "Paths.h"
-#include "model/gaming/Filters.h"
-#include "model/gaming/Game.h"
+//#include "model/gaming/Filters.h"
 #include "utils/HashMap.h"
 
 #include <QDebug>
@@ -36,7 +35,7 @@ QString default_config_path()
 {
     return paths::writableConfigDir() + QStringLiteral("/filters.txt");
 }
-
+/*
 QVector<model::Filter*> default_filters()
 {
     QVector<model::Filter*> filters {
@@ -55,10 +54,10 @@ QVector<model::Filter*> default_filters()
     });
     return filters;
 }
-
+*/
 } // namespace
 
-
+/*
 QVector<model::Filter*> CustomFilters::read(const QString& path)
 {
     const QString config_path = path.isEmpty() ? default_config_path() : path;
@@ -182,3 +181,4 @@ QVector<model::Filter*> CustomFilters::read(const QString& path)
     qInfo().noquote() << tr_log("Found %1 custom filters").arg(out.length());
     return out;
 }
+*/

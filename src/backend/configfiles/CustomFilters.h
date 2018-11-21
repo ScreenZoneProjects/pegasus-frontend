@@ -19,10 +19,10 @@
 
 #include <QVector>
 
-namespace model { class Filter; }
+//namespace model { class Filter; }
 
 
 class CustomFilters {
 public:
-    static QVector<model::Filter*> read(const QString& path = QString());
+    //static QVector<model::Filter*> read(const QString& path = QString());
 };

@@ -1,5 +1,5 @@
 // Pegasus Frontend
-// Copyright (C) 2017  Mátyás Mustoha
+// Copyright (C) 2017-2018  Mátyás Mustoha
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,55 +20,34 @@
 #include <QtConcurrent/QtConcurrent>
 
 
-ApiObject::ApiObject(QObject* parent)
+PublicApi::PublicApi(QObject* parent)
     : QObject(parent)
-    , m_launch_collection(nullptr)
+    /*, m_launch_collection(nullptr)
     , m_launch_game(nullptr)
-    , m_providerman(this)
+    , m_providerman(this)*/
+    , m_collections(m_dataset.m_collections)
 {
-    connect(m_settings.localesPtr(), &model::LocaleList::localeChanged,
-            this, &ApiObject::localeChanged);
-    connect(&m_system, &model::System::appCloseRequested,
-            this, &ApiObject::appCloseRequested);
-    connect(&m_filters, &model::Filters::filtersChanged,
-            this, &ApiObject::onFiltersChanged);
+    /*connect(&m_filters, &model::Filters::filtersChanged,
+            this, &PublicApi::onFiltersChanged);
 
-    connect(&m_providerman, &ProviderManager::gameCountChanged,
-            &m_meta, &model::Meta::onGameCountUpdate);
-    connect(&m_providerman, &ProviderManager::firstPhaseComplete,
-            &m_meta, &model::Meta::onFirstPhaseCompleted);
-    connect(&m_providerman, &ProviderManager::secondPhaseComplete,
-            &m_meta, &model::Meta::onSecondPhaseCompleted);
-
-    connect(&m_providerman, &ProviderManager::staticDataReady,
-            this, &ApiObject::onStaticDataLoaded);
-
-    connect(&m_collections, &model::CollectionList::currentChanged,
-            this, &ApiObject::currentCollectionChanged);
-    connect(&m_collections, &model::CollectionList::currentGameChanged,
-            this, &ApiObject::currentGameChanged);
     connect(&m_collections, &model::CollectionList::gameLaunchRequested,
-            this, &ApiObject::onLaunchRequested);
+            this, &PublicApi::onLaunchRequested);
     connect(&m_collections, &model::CollectionList::gameFavoriteChanged,
-            this, &ApiObject::onGameFavoriteChanged);
-
-    // partial QML reload
-    connect(&m_meta, &model::Meta::qmlClearCacheRequested,
-            this, &ApiObject::qmlClearCacheRequested);
+            this, &PublicApi::onGameFavoriteChanged);*/
 }
-
-void ApiObject::startScanning()
+/*
+void PublicApi::startScanning()
 {
     m_providerman.startSearch();
 }
 
-void ApiObject::onStaticDataLoaded(QVector<model::Collection*> collections, QVector<model::Game*> games)
+void PublicApi::onStaticDataLoaded(QVector<model::Collection*> collections, QVector<model::Game*> games)
 {
     m_collections.setModelData(std::move(collections), std::move(games));
     m_meta.onUiReady();
 }
 
-void ApiObject::onLaunchRequested(model::Collection* coll, model::Game* game)
+void PublicApi::onLaunchRequested(model::Collection* coll, model::Game* game)
 {
     // avoid launch spamming
     if (m_launch_game)
@@ -80,14 +59,14 @@ void ApiObject::onLaunchRequested(model::Collection* coll, model::Game* game)
     emit launchGame(m_launch_collection, m_launch_game);
 }
 
-void ApiObject::onGameLaunchOk()
+void PublicApi::onGameLaunchOk()
 {
     Q_ASSERT(m_launch_game);
 
     m_providerman.onGameLaunched(m_launch_collection, m_launch_game);
 }
 
-void ApiObject::onGameLaunchError()
+void PublicApi::onGameLaunchError()
 {
     Q_ASSERT(m_launch_collection);
     Q_ASSERT(m_launch_game);
@@ -97,7 +76,7 @@ void ApiObject::onGameLaunchError()
     m_launch_game = nullptr;
 }
 
-void ApiObject::onGameFinished()
+void PublicApi::onGameFinished()
 {
     Q_ASSERT(m_launch_collection);
     Q_ASSERT(m_launch_game);
@@ -108,13 +87,14 @@ void ApiObject::onGameFinished()
     m_launch_game = nullptr;
 }
 
-void ApiObject::onGameFavoriteChanged()
+void PublicApi::onGameFavoriteChanged()
 {
     m_providerman.onGameFavoriteChanged(m_collections.allGames());
 }
 
-void ApiObject::onFiltersChanged()
+void PublicApi::onFiltersChanged()
 {
     for (model::Collection* const collection : m_collections.collections())
         collection->gameListMut().applyFilters(m_filters);
 }
+*/

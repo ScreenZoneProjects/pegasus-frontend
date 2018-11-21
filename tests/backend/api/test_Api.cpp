@@ -34,7 +34,7 @@ void test_Api::initialState()
     QTest::ignoreMessage(QtInfoMsg, QRegularExpression("Found theme .*"));
     QTest::ignoreMessage(QtInfoMsg, QRegularExpression("Theme set to .*"));
 
-    ApiObject api;
+    PublicApi api;
 
     QCOMPARE(api.currentCollection(), static_cast<model::Collection*>(nullptr));
     QCOMPARE(api.currentGame(), static_cast<model::Game*>(nullptr));

@@ -17,26 +17,18 @@
 
 #include "Collection.h"
 
-#include "Game.h"
-
 
 namespace modeldata {
 
 Collection::Collection(QString name)
-    : m_name(std::move(name))
-    , m_short_name(m_name.toLower())
+    : name(std::move(name))
+    , m_short_name(name.toLower())
 {}
 
 void Collection::setShortName(const QString& str)
 {
     Q_ASSERT(!str.isEmpty());
     m_short_name = str.toLower();
-}
-
-void Collection::setLaunchCmd(QString str)
-{
-    Q_ASSERT(!str.isEmpty());
-    m_launch_cmd = std::move(str);
 }
 
 } // namespace modeldata

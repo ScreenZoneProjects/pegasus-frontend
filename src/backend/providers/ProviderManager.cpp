@@ -19,8 +19,8 @@
 
 #include "AppSettings.h"
 #include "LocaleUtils.h"
-#include "model/gaming/Collection.h"
-#include "model/gaming/Game.h"
+#include "modeldata/gaming/Collection.h"
+#include "modeldata/gaming/Game.h"
 #include "providers/pegasus/PegasusProvider.h"
 #include "providers/pegasus_favorites/Favorites.h"
 #include "providers/pegasus_playtime/PlaytimeStats.h"
@@ -82,7 +82,7 @@ void run_list_providers(const std::vector<ProviderPtr>& providers,
     remove_empty_collections(collections, collection_childs);
 }
 
-void build_ui_layer(HashMap<QString, modeldata::Game>& games,
+/*void build_ui_layer(HashMap<QString, modeldata::Game>& games,
                     HashMap<QString, modeldata::Collection>& collections,
                     HashMap<QString, std::vector<QString>>& collection_childs,
                     QVector<model::Game*>& game_vec,
@@ -110,9 +110,9 @@ void build_ui_layer(HashMap<QString, modeldata::Game>& games,
 
         coll->setGameList(childs);
     }
-}
+}*/
 
-void move_qobjs_to_thread(const QVector<model::Game*>& games,
+/*void move_qobjs_to_thread(const QVector<model::Game*>& games,
                           const QVector<model::Collection*>& collections,
                           QThread* const target_thread)
 {
@@ -121,13 +121,12 @@ void move_qobjs_to_thread(const QVector<model::Game*>& games,
 
     for (model::Game* const game : games)
         game->moveToThread(target_thread);
-}
+}*/
 
 } // namespace
 
 
-ProviderManager::ProviderManager(QObject* parent)
-    : QObject(parent)
+ProviderManager::ProviderManager()
 {
     m_providers.emplace_back(new providers::pegasus::PegasusProvider());
     m_providers.emplace_back(new providers::favorites::Favorites());
@@ -153,10 +152,10 @@ ProviderManager::ProviderManager(QObject* parent)
         m_providers.emplace_back(new providers::skraper::SkraperAssetsProvider());
 #endif
 
-    for (const auto& provider : m_providers) {
+    /*for (const auto& provider : m_providers) {
         connect(provider.get(), &providers::Provider::gameCountChanged,
                 this, &ProviderManager::gameCountChanged);
-    }
+    }*/
 }
 
 void ProviderManager::startSearch()
@@ -171,30 +170,30 @@ void ProviderManager::startSearch()
 
 
         run_list_providers(m_providers, games, collections, collection_childs);
-        emit firstPhaseComplete(timer.restart());
+        //emit firstPhaseComplete(timer.restart());
 
         for (const auto& provider : m_providers)
             provider->findStaticData(games, collections, collection_childs);
-        emit secondPhaseComplete(timer.restart());
+        //emit secondPhaseComplete(timer.restart());
 
 
-        QVector<model::Collection*> collection_vec;
+        /*QVector<model::Collection*> collection_vec;
         QVector<model::Game*> game_vec;
         HashMap<QString, model::Game*> modelgame_map;
 
         build_ui_layer(games, collections, collection_childs,
                        game_vec, collection_vec, modelgame_map);
-        move_qobjs_to_thread(game_vec, collection_vec, parent()->thread());
-        emit staticDataReady(collection_vec, game_vec);
+        //move_qobjs_to_thread(game_vec, collection_vec, parent()->thread());
+        //emit staticDataReady(collection_vec, game_vec);
 
 
         for (const auto& provider : m_providers)
             provider->findDynamicData(game_vec, collection_vec, modelgame_map);
-        emit thirdPhaseComplete(timer.elapsed());
+        //emit thirdPhaseComplete(timer.elapsed());*/
     });
 }
 
-void ProviderManager::onGameFavoriteChanged(const QVector<model::Game*>& all_games)
+/*void ProviderManager::onGameFavoriteChanged(const QVector<model::Game*>& all_games)
 {
     if (m_init_seq.isRunning())
         return;
@@ -219,4 +218,4 @@ void ProviderManager::onGameFinished(model::Collection* const collection, model:
 
     for (const auto& provider : m_providers)
         provider->onGameFinished(collection, game);
-}
+}*/

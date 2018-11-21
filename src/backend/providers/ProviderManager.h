@@ -31,24 +31,24 @@ class ProviderManager : public QObject {
     Q_OBJECT
 
 public:
-    explicit ProviderManager(QObject* parent);
+    explicit ProviderManager();
 
     size_t providerCount() const { return m_providers.size(); }
 
     void startSearch();
-    void onGameLaunched(model::Collection* const, model::Game* const);
+    /*void onGameLaunched(model::Collection* const, model::Game* const);
     void onGameFinished(model::Collection* const, model::Game* const);
-    void onGameFavoriteChanged(const QVector<model::Game*>&);
-
+    void onGameFavoriteChanged(const QVector<model::Game*>&);*/
+/*
 signals:
     void gameCountChanged(int);
     void singleProviderFinished();
 
     void firstPhaseComplete(qint64);
     void secondPhaseComplete(qint64);
-    void staticDataReady(QVector<model::Collection*>, QVector<model::Game*>);
+    //void staticDataReady(QVector<model::Collection*>, QVector<model::Game*>);
     void thirdPhaseComplete(qint64);
-
+*/
 private:
     std::vector<ProviderPtr> m_providers;
     QFuture<void> m_init_seq;

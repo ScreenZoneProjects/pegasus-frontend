@@ -20,15 +20,13 @@
 
 namespace modeldata {
 
-Game::Game(QFileInfo fileinfo)
-    : title(fileinfo.completeBaseName())
+Game::Game(QString title)
+    : title(title)
     , player_count(1)
     , is_favorite(false)
     , rating(0.f)
     , playcount(0)
     , playtime(0)
-    , m_fileinfo(std::move(fileinfo))
-{
-}
+{}
 
 } // namespace modeldata

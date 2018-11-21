@@ -113,7 +113,7 @@ void register_appmanifests(HashMap<QString, modeldata::Game>& games,
     const auto dir_flags = QDirIterator::FollowSymlinks;
     const QStringList name_filters = { QStringLiteral("appmanifest_*.acf") };
 
-    for (const QString& dir_path : collection.source_dirs) {
+    /*for (const QString& dir_path : collection.source_dirs) {
         QDirIterator dir_it(dir_path, name_filters, dir_filters, dir_flags);
         while (dir_it.hasNext()) {
             dir_it.next();
@@ -125,7 +125,7 @@ void register_appmanifests(HashMap<QString, modeldata::Game>& games,
 
             childs.emplace_back(game_key);
         }
-    }
+    }*/
 }
 
 } // namespace
@@ -146,8 +146,8 @@ void Gamelist::find(HashMap<QString, modeldata::Game>& games,
     if (steamdir.isEmpty())
         return;
 
-    QStringList installdirs = find_steam_installdirs(steamdir);
-    if (installdirs.isEmpty()) {
+    m_installdirs = find_steam_installdirs(steamdir);
+    if (m_installdirs.isEmpty()) {
         qWarning().noquote() << MSG_PREFIX << tr_log("no installation directories found");
         return;
     }
@@ -158,7 +158,7 @@ void Gamelist::find(HashMap<QString, modeldata::Game>& games,
 
     modeldata::Collection& collection = collections.at(STEAM_TAG);
     collection.setShortName(STEAM_TAG);
-    collection.source_dirs.append(installdirs);
+    //collection.source_dirs.append(installdirs);
 
     std::vector<QString>& childs = collection_childs[STEAM_TAG];
 

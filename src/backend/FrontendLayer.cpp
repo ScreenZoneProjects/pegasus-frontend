@@ -48,9 +48,10 @@ QNetworkAccessManager* DiskCachedNAMFactory::create(QObject* parent)
 } // namespace
 
 
-FrontendLayer::FrontendLayer(QObject* const api, QObject* parent)
-    : QObject(parent)
-    , m_api(api)
+FrontendLayer::FrontendLayer(QObject* const api_public, QObject* const api_private)
+    : m_api_public(api_public)
+    , m_api_private(api_private)
+    , m_engine(nullptr)
 {
     // Note: the pointer to the Api is non-owning and constant during the runtime
 }
@@ -59,7 +60,7 @@ void FrontendLayer::rebuild()
 {
     Q_ASSERT(!m_engine);
 
-    m_engine = new QQmlApplicationEngine();
+    m_engine = new QQmlApplicationEngine(this);
     m_engine->addImportPath(QStringLiteral("lib/qml"));
     m_engine->addImportPath(QStringLiteral("qml"));
     m_engine->setNetworkAccessManagerFactory(new DiskCachedNAMFactory);
@@ -67,7 +68,8 @@ void FrontendLayer::rebuild()
     m_engine->addImageProvider(QStringLiteral("androidicons"), &m_android_icon_provider);
 #endif
 
-    m_engine->rootContext()->setContextProperty(QStringLiteral("api"), m_api);
+    m_engine->rootContext()->setContextProperty(QStringLiteral("api"), m_api_public);
+    m_engine->rootContext()->setContextProperty(QStringLiteral("internal"), m_api_private);
     m_engine->load(QUrl(QStringLiteral("qrc:/frontend/main.qml")));
 
     emit rebuildComplete();
@@ -78,10 +80,11 @@ void FrontendLayer::teardown()
     Q_ASSERT(m_engine);
 
     // signal forwarding
-    connect(m_engine.data(), &QQmlApplicationEngine::destroyed,
+    connect(m_engine, &QQmlApplicationEngine::destroyed,
             this, &FrontendLayer::teardownComplete);
 
     m_engine->deleteLater();
+    m_engine = nullptr;
 }
 
 void FrontendLayer::clearCache()

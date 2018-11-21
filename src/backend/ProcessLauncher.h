@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "utils/FwdDeclModel.h"
+#include "utils/FwdDeclModelData.h"
 
 #include <QObject>
 #include <QPointer>
@@ -39,7 +39,7 @@ signals:
     void processFinished();
 
 public slots:
-    void onLaunchRequested(const model::Collection*, const model::Game*);
+    void onLaunchRequested(const modeldata::Collection*, const modeldata::Game*);
     void onTeardownComplete();
 
 private slots:

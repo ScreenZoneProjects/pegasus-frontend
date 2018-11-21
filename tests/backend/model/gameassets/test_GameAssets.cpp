@@ -17,7 +17,7 @@
 
 #include <QtTest/QtTest>
 
-#include "model/gaming/GameAssets.h"
+#include "model/gaming/AssetListModel.h"
 
 
 class test_GameAssets : public QObject

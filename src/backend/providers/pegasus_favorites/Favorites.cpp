@@ -19,7 +19,6 @@
 
 #include "LocaleUtils.h"
 #include "Paths.h"
-#include "model/gaming/Game.h"
 
 #include <QDebug>
 #include <QFile>
@@ -50,7 +49,7 @@ Favorites::Favorites(QString db_path, QObject* parent)
     : Provider(parent)
     , m_db_path(std::move(db_path))
 {}
-
+/*
 void Favorites::findDynamicData(const QVector<model::Game*>&,
                                 const QVector<model::Collection*>&,
                                 const HashMap<QString, model::Game*>& modelgame_map)
@@ -125,6 +124,6 @@ void Favorites::start_processing()
         emit finishedWriting();
     });
 }
-
+*/
 } // namespace favorites
 } // namespace providers

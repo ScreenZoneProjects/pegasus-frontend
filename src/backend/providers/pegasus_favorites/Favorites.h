@@ -32,10 +32,10 @@ public:
     explicit Favorites(QObject* parent = nullptr);
     explicit Favorites(QString db_path, QObject* parent = nullptr);
 
-    void findDynamicData(const QVector<model::Game*>&,
+    /*void findDynamicData(const QVector<model::Game*>&,
                          const QVector<model::Collection*>&,
                          const HashMap<QString, model::Game*>&) final;
-    void onGameFavoriteChanged(const QVector<model::Game*>&) final;
+    void onGameFavoriteChanged(const QVector<model::Game*>&) final;*/
 
 signals:
     void startedWriting();

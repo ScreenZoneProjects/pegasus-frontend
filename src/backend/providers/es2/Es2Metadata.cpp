@@ -77,9 +77,6 @@ QString findGamelistFile(const modeldata::Collection& collection)
     const QString GAMELISTFILE = QStringLiteral("/gamelist.xml");
 
     std::vector<QString> possible_files;
-    for (const QString& dir : collection.source_dirs) {
-        possible_files.emplace_back(dir % GAMELISTFILE);
-    }
     if (!collection.shortName().isEmpty()) {
         possible_files.emplace_back(paths::homePath()
             % QStringLiteral("/.emulationstation/gamelists/")
@@ -177,7 +174,7 @@ void findAssets(modeldata::Game& game,
                 HashMap<MetaTypes, QString, EnumHash>& xml_props,
                 const modeldata::Collection& collection)
 {
-    const QString rom_dir = collection.source_dirs.constFirst() % '/';
+    /*const QString rom_dir = collection.source_dirs.constFirst() % '/';
 
     if (game.assets.single(AssetType::BOX_FRONT).isEmpty()) {
         QString& path = xml_props[MetaTypes::IMAGE];
@@ -196,7 +193,7 @@ void findAssets(modeldata::Game& game,
         resolveShellChars(path, rom_dir);
         if (!path.isEmpty() && ::validExtPath(path))
             game.assets.addFileMaybe(AssetType::VIDEOS, path);
-    }
+    }*/
 }
 
 MetadataParser::MetadataParser(QObject* parent)
@@ -226,7 +223,7 @@ void MetadataParser::enhance(HashMap<QString, modeldata::Game>& games,
                              const HashMap<QString, modeldata::Collection>& collections,
                              const HashMap<QString, std::vector<QString>>& collection_childs)
 {
-    const QString imgdir_base = paths::homePath()
+    /*const QString imgdir_base = paths::homePath()
                               % QStringLiteral("/.emulationstation/downloaded_images/");
     // shortpath: dir name + extensionless filename
     HashMap<QString, modeldata::Game* const> games_by_shortpath;
@@ -243,14 +240,14 @@ void MetadataParser::enhance(HashMap<QString, modeldata::Game>& games,
             const QString shortpath = coll_shortname % '/' % gamefile;
             games_by_shortpath.emplace(shortpath, game);
         }
-    }
+    }*/
 
 
-    for (const auto& pair : collections) {
+    /*for (const auto& pair : collections) {
         const modeldata::Collection& collection = pair.second;
 
         // ignore Steam
-        if (collection.name() == QLatin1String("Steam"))
+        if (collection.name == QLatin1String("Steam"))
             continue;
 
         // find the metadata file
@@ -278,7 +275,7 @@ void MetadataParser::enhance(HashMap<QString, modeldata::Game>& games,
             const QDir imgdir(imgdir_base % collection.shortName(), QString(), QDir::NoSort, dir_filters);
             findPegasusAssetsInScrapedir(imgdir, games_by_shortpath);
         }
-    }
+    }*/
 }
 
 void MetadataParser::parseGamelistFile(QXmlStreamReader& xml,
@@ -343,20 +340,20 @@ void MetadataParser::parseGameEntry(QXmlStreamReader& xml,
 
     // apply
 
-    convertToCanonicalPath(game_path, collection.source_dirs.constFirst());
+    /*convertToCanonicalPath(game_path, collection.source_dirs.constFirst());
     if (!games.count(game_path))
         return;
 
     modeldata::Game& game = games.at(game_path);
     applyMetadata(game, xml_props);
-    findAssets(game, xml_props, collection);
+    findAssets(game, xml_props, collection);*/
 }
 
 void MetadataParser::applyMetadata(modeldata::Game& game,
                                    HashMap<MetaTypes, QString, EnumHash>& xml_props) const
 {
     // first, the simple strings
-    game.title = xml_props[MetaTypes::NAME];
+    //game.title = xml_props[MetaTypes::NAME];
     game.description = xml_props[MetaTypes::DESC];
     game.developers.append(xml_props[MetaTypes::DEVELOPER]);
     game.publishers.append(xml_props[MetaTypes::PUBLISHER]);

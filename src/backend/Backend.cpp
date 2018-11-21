@@ -60,50 +60,50 @@ void on_app_close(AppCloseType type)
 namespace backend {
 
 Backend::Backend()
-    : frontend(&api)
+    : frontend(&api_public, &api_private)
 {
     // the following communication is required because process handling
     // and destroying/rebuilding the frontend stack are asynchronous tasks;
     // see the relevant classes
 
     // the Api asks the Launcher to start the game
-    QObject::connect(&api, &ApiObject::launchGame,
+    /*QObject::connect(&api_public, &PublicApi::launchGame,
                      &launcher, &ProcessLauncher::onLaunchRequested);
 
     // the Launcher tries to start the game, ask the Frontend
     // to tear down the UI, then report back to the Api
     QObject::connect(&launcher, &ProcessLauncher::processLaunchOk,
-                     &api, &ApiObject::onGameLaunchOk);
-
-    QObject::connect(&launcher, &ProcessLauncher::processLaunchError,
-                     &api, &ApiObject::onGameLaunchError);
+                     &frontend, &FrontendLayer::teardown);
 
     QObject::connect(&launcher, &ProcessLauncher::processLaunchOk,
-                     &frontend, &FrontendLayer::teardown);
+                     &api_public, &PublicApi::onGameLaunchOk);
+
+    QObject::connect(&launcher, &ProcessLauncher::processLaunchError,
+                     &api_public, &PublicApi::onGameLaunchError);
 
     QObject::connect(&frontend, &FrontendLayer::teardownComplete,
                      &launcher, &ProcessLauncher::onTeardownComplete);
 
     // when the game ends, the Launcher wakes up the Api and the Frontend
     QObject::connect(&launcher, &ProcessLauncher::processFinished,
-                     &api, &ApiObject::onGameFinished);
+                     &api_public, &PublicApi::onGameFinished);
 
     QObject::connect(&launcher, &ProcessLauncher::processFinished,
-                     &frontend, &FrontendLayer::rebuild);
+                     &frontend, &FrontendLayer::rebuild);*/
 
 
     // special commands
-    QObject::connect(&api, &ApiObject::qmlClearCacheRequested,
+    QObject::connect(&api_private, &PrivateApi::qmlClearCacheRequested,
                      &frontend, &FrontendLayer::clearCache);
 
     // close the app on quit request
-    QObject::connect(&api, &ApiObject::appCloseRequested, on_app_close);
+    QObject::connect(&api_private, &PrivateApi::appCloseRequested, on_app_close);
 }
 
 void Backend::start()
 {
     frontend.rebuild();
-    api.startScanning();
+    api_private.startScanning();
 }
 
 } // namespace backend

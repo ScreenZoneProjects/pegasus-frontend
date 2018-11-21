@@ -209,14 +209,13 @@ void SystemsParser::readSystemEntry(QXmlStreamReader& xml,
     modeldata::Collection& collection = collections.at(collection_name);
 
     collection.setShortName(shortname);
-    collection.source_dirs.append(xml_props[QLatin1String("path")]);
+    //collection.source_dirs.append(xml_props[QLatin1String("path")]);
 
-    const QString launch_cmd = xml_props[QLatin1String("command")]
+    collection.launch_cmd = xml_props[QLatin1String("command")]
         .replace(QLatin1String("\"%ROM%\""), QLatin1String("\"{file.path}\"")) // make sure we don't double quote
         .replace(QLatin1String("%ROM%"), QLatin1String("\"{file.path}\""))
         .replace(QLatin1String("%ROM_RAW%"), QLatin1String("{file.path}"))
         .replace(QLatin1String("%BASENAME%"), QLatin1String("{file.basename}"));
-    collection.setLaunchCmd(launch_cmd);
 
     // add the games
 
@@ -248,12 +247,12 @@ void SystemsParser::readSystemEntry(QXmlStreamReader& xml,
             QFileInfo fileinfo = files_it.fileInfo();
             const QString game_key = fileinfo.canonicalFilePath();
 
-            if (!games.count(game_key)) {
+            /*if (!games.count(game_key)) {
                 modeldata::Game game(std::move(fileinfo));
                 game.launch_cmd = collection.launchCmd();
                 games.emplace(game_key, std::move(game));
             }
-            collection_childs[collection_name].emplace_back(game_key);
+            collection_childs[collection_name].emplace_back(game_key);*/
         }
     }
 }

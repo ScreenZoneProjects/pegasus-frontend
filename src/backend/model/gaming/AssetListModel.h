@@ -18,6 +18,7 @@
 #pragma once
 
 #include "modeldata/gaming/GameAssets.h"
+#include "utils/MoveOnly.h"
 
 #include <QObject>
 
@@ -28,8 +29,7 @@
 
 
 namespace model {
-
-class GameAssets : public QObject {
+class AssetListModel : public QObject {
     Q_OBJECT
 
     // NOTE: by manually listing the properties (instead of eg. a Map),
@@ -61,7 +61,7 @@ class GameAssets : public QObject {
     Q_PROPERTY(QStringList videos READ videos CONSTANT)
 
 public:
-    explicit GameAssets(modeldata::GameAssets* const, QObject* parent = nullptr);
+    explicit AssetListModel(modeldata::GameAssets* const, QObject* parent = nullptr);
 
 private:
     const QStringList& screenshots() { return m_assets->multi(AssetType::SCREENSHOTS); }
@@ -70,5 +70,4 @@ private:
 private:
     modeldata::GameAssets* const m_assets;
 };
-
 } // namespace model

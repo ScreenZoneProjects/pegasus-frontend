@@ -17,40 +17,26 @@
 
 #pragma once
 
-#include "GameAssets.h"
-#include "GameEntry.h"
-#include "utils/HashMap.h"
-#include "utils/MoveOnly.h"
+#include "modeldata/gaming/Collection.h"
+#include "modeldata/gaming/Game.h"
 
-#include <QDateTime>
-#include <QString>
-#include <QStringList>
+#include <QObject>
 
 
-namespace modeldata {
-struct Game {
-    explicit Game(QString title);
+class DataSet : public QObject {
+    Q_OBJECT
 
-    const QString title;
-    QString summary;
-    QString description;
+public:
+    explicit DataSet();
 
-    uint8_t player_count;
-    bool is_favorite;
-    float rating;
-    QDate release_date;
+    void reload();
 
-    uint32_t playcount;
-    qint64 playtime;
-    QDateTime last_played;
+signals:
+    void loadProgressChanged(float);
+    void loadComplete();
 
-    QStringList developers;
-    QStringList publishers;
-    QStringList genres;
-
-    GameAssets assets;
-    std::vector<GameEntry> entries;
-
-    MOVE_ONLY(Game)
+//private:
+public:
+    std::vector<modeldata::Collection> m_collections;
+    std::vector<modeldata::Game> m_games;
 };
-} // namespace modeldata

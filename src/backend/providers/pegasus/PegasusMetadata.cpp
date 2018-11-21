@@ -46,7 +46,7 @@ AssetType detect_asset_type(const QString& basename, const QString& ext)
 void find_assets(const std::vector<QString>& dir_list, HashMap<QString, modeldata::Game>& games)
 {
     // shortpath: canonical path to dir + extensionless filename
-    HashMap<QString, modeldata::Game*> games_by_shortpath;
+    /*HashMap<QString, modeldata::Game*> games_by_shortpath;
     games_by_shortpath.reserve(games.size());
     for (auto& pair : games) {
         QString shortpath = pair.second.fileinfo().canonicalPath()
@@ -78,7 +78,7 @@ void find_assets(const std::vector<QString>& dir_list, HashMap<QString, modeldat
             modeldata::Game* const game = games_by_shortpath[shortpath];
             game->assets.addFileMaybe(asset_type, dir_it.filePath());
         }
-    }
+    }*/
 }
 
 } // namespace
@@ -200,9 +200,9 @@ void PegasusMetadata::read_metadata_file(const QString& dir_path,
             return;
         }
         switch (m_key_types.at(key)) {
-            case MetaAttribType::TITLE:
+            /*case MetaAttribType::TITLE:
                 curr_game->title = val;
-                break;
+                break;*/
             case MetaAttribType::DEVELOPER:
                 curr_game->developers.append(val);
                 break;
@@ -257,12 +257,12 @@ void PegasusMetadata::read_metadata_file(const QString& dir_path,
                     on_error(lineno, tr_log("failed to parse rating value"));
                 }
                 break;
-            case MetaAttribType::LAUNCH_CMD:
+            /*case MetaAttribType::LAUNCH_CMD:
                 curr_game->launch_cmd = val;
                 break;
             case MetaAttribType::LAUNCH_WORKDIR:
                 curr_game->launch_workdir = val;
-                break;
+                break;*/
         }
     };
 
